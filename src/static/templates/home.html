@@ -1,0 +1,13 @@
+<div id="home">
+  <section class="home-give" layout="column" layout-align="center center">
+    <h2>Which shopper are you looking for now?</h2>
+    <h4 ng-show="vm.invalidShopperId" style="color:yellow"><i>*Please Enter A Valid Shopper ID</i></h4>
+    <input type="text" placeholder="Enter the Shopper ID" style="width: 50%; align:center" ng-model="vm.shopperId">
+    <a ng-click="vm.findShopper()" class="button"><i class="fa fa-pencil-square-o"></i> Search </a>
+  </section>
+  <footer class="global-footer v-depth-2">
+    <div class="container left-align">
+      <img src="static/img/logo/godaddy-logo.png" style="width:33%" />
+    </div>
+  </footer>
+</div>
