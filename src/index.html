@@ -4,24 +4,49 @@
 
 <div id="demo"><h2>Lets make some AJAX requests</h2></div>
 
+<!--
 <button type="button" onclick="loadDoc()">Load Info</button>
-
+-->
 <p id="data"></p>
 
 <form action="/newRepo" method="POST">
 
     <input type="text" placeholder="name" name="id">
     <input type="text" placeholder="quote" name="name">
-    <button type="submit">Submit</button>
+<!--    <button type="submit">Submit</button> -->
 
 </form>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
+
+<script>
+
+    // GET REQUEST TO GITHUB to grab data
+
+    $.getJSON("https://api.github.com/users/mralexgray/repos", function(data) {
+        for(i=0; i<data.length; i++) {
+            console.log(data[i].id);
+        }
+    });
+
+    $.post('http://localhost:7777/newRepo',
+
+            { "id":"0101", "name":"humza", "fullname":"humza ali" },
+
+            function() {
+                console.log('success');
+            }
+    );
+
+</script>
 
 
+<button>Send an HTTP GET request</button>
 
+<!--
 <script src='./static/js/xml.js' type='text/javascript'> </script>
-
+-->
 
 </body>
 </html>

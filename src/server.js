@@ -132,11 +132,7 @@ app.post('/newUser', function(req, res)
 
 app.post('/newRepo', function(req, res)
 {
-    console.log(req.body);
-    
-    
-    
-    /*
+    console.log("we did this at least");
     var repo = new Repo();
 
     // grab things from request body,
@@ -144,15 +140,17 @@ app.post('/newRepo', function(req, res)
 
     repo.id = req.body.id;
     repo.name = req.body.name;
-    repo.fullname = req.body.owner.login;
+    repo.fullname = req.body.fullname;
+
+    console.log("all the way here");
 
     // save our new repo into our database??
     repo.save(function(err) {
         if (err)
             res.send(err);
         res.send(repo);
+        console.log("success!?!");
     });
-*/
 });
 
 
