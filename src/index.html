@@ -6,53 +6,22 @@
 
 <button type="button" onclick="loadDoc()">Load Info</button>
 
-
 <p id="data"></p>
 
+<form action="/newRepo" method="POST">
 
-<!-- for some reason, using src="path to js file" doesnt work with the server.. so script is in the html file -->
+    <input type="text" placeholder="name" name="id">
+    <input type="text" placeholder="quote" name="name">
+    <button type="submit">Submit</button>
 
-<script>
-
-function loadDoc() {
-
-  	var xhttp = new XMLHttpRequest();
-  	xhttp.onreadystatechange = function() {
-  
-  		if (xhttp.readyState == 4 && xhttp.status == 200) {
-		
-  			// take JSON object, turn into local object
-			var data = JSON.parse(xhttp.responseText);
-			var text = "";
-			var i;
-
-			var id = "ID:  ";
-			var name = "  Name:   ";
-			var fullname = "  Full Name:   ";	
-			var login = "  Login   ";
-
-			// start the parsing
-			for(i = 0; i < data.length;i++) {
-				text += id.bold() + data[i].id + name.bold() + data[i].name 
-				+ fullname.bold() + data[i].full_name + login.bold() + 
-				data[i].owner.login + "<br>";
-			}
-
-			document.getElementById("data").innerHTML = text;
-    	}	
-  
-  	};
-  
-  xhttp.open("GET",  "https://api.github.com/users/mralexgray/repos", true);
-  xhttp.send();
-
-}
+</form>
 
 
 
-</script>
+
+
+<script src='./static/js/xml.js' type='text/javascript'> </script>
 
 
 </body>
 </html>
-

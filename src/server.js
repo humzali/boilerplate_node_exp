@@ -8,8 +8,10 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var port = process.env.PORT||7777;
 //var router = express.Router();
-// var mongoose = require('mongoose');
-// mongoose.connect('localhost:27017/critinder');
+ var mongoose = require('mongoose');
+ mongoose.connect('localhost:27017/test');
+
+app.use(bodyParser.urlencoded({extended: true}));
 
 /*
 Auth0 passport
@@ -78,9 +80,12 @@ app.set('views', __dirname + '/static/templates');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
+
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, '/index.html'));
 });
+
+
 
 app.listen(port, function()  {
     console.log('listening on port ' + port);
@@ -95,6 +100,7 @@ var Bio = require('./static/model/bio');
 var Picture = require('./static/model/picture');
 var User = require('./static/model/user');
 var Profile = require('./static/model/profile');
+var Repo = require('./static/model/repo');
 
 /*
  Post Request EndPoints
@@ -112,8 +118,98 @@ app.post('/newUser', function(req, res)
       res.send(err);
     res.send(user);
   });
-
 });
+
+// create 4 functions, create client side
+// create, read, update, delete 
+
+/*  CREATE
+
+    this function tells our server what to do when it gets
+    a post request. in our implementation it takes the id,
+    name, and fullname and saves them in our local mongo database
+ */
+
+app.post('/newRepo', function(req, res)
+{
+    console.log(req.body);
+    
+    
+    
+    /*
+    var repo = new Repo();
+
+    // grab things from request body,
+    // and populate our new object?
+
+    repo.id = req.body.id;
+    repo.name = req.body.name;
+    repo.fullname = req.body.owner.login;
+
+    // save our new repo into our database??
+    repo.save(function(err) {
+        if (err)
+            res.send(err);
+        res.send(repo);
+    });
+*/
+});
+
+
+/*  READ
+    tries to find a user with a certain id #
+ */
+app.get('/findRepo', function(req, res)
+{
+
+    res.send('Hi There');
+/*
+    // what id to use here??
+    Repo.findById(1, function(err, repo) {
+        if (err) throw err;
+
+        // show repo we found
+        console.log(repo);
+    });
+*/
+});
+
+/*  UPDATE
+    we find a repo by its id and update its name to be DAVID
+ */
+
+app.post('/updateRepo', function(req, res)
+{
+
+    Repo.findById(1, function(err, repo) {
+        if(err) throw (err);
+
+        repo.name = 'DAVID';
+
+        repo.save(function(err) {
+            if (err) throw err;
+
+            console.log('user succesfully updated with name david');
+        });
+    });
+});
+
+/* DELETE
+    deletes a user !
+*/
+
+app.delete('/deleteRepo', function(req, res)
+{
+
+    Repo.findByIdAndRemove(1, function(err) {
+
+        if (err) throw err;
+
+        console.log('User Deleted!');
+
+    });
+});
+
 
 app.post('/newProfile', function(req, res){
   var profile = new Profile();
