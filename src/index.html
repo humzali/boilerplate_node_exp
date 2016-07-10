@@ -17,7 +17,7 @@
 
 </form>
 
-
+<!-- grab jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
 
 <script>
@@ -30,6 +30,10 @@
         }
     });
 
+    // POST IS NOW SUCCESFUL, BUT json not showing up in terminal, and no new files in DB
+
+    // POST request to local node.js to create new repo
+    // CREATE
     $.post('http://localhost:7777/newRepo',
 
             { "id":"0101", "name":"humza", "fullname":"humza ali" },
@@ -38,6 +42,42 @@
                 console.log('success');
             }
     );
+
+
+    // READ
+    $.ajax({
+        url: 'http://localhost:7777/findRepo',
+        type: 'GET',
+        success: function(result) {
+
+            // do something with result
+            // update html page with some shit
+        }
+    });
+
+    // UPDATE
+    $.ajax({
+        url: 'http://localhost:7777/updateRepo'
+        type: 'POST',
+        success: function(result) {
+
+
+        }
+    });
+
+
+    // DELETE
+    $.ajax({
+        url: 'http://localhost:7777/deleteRepo',
+        type: 'DELETE',
+        success: function(result) {
+            // do something with the result
+        }
+    });
+
+
+
+
 
 </script>
 
