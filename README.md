@@ -1,3 +1,3 @@
-# critinder
+# learning serverside web dev
 
-This app is for COGS 160 Team Jake, James, and Bharat.
+attempting to learn about the back-end
