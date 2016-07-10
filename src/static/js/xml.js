@@ -1,4 +1,76 @@
 
+// maybe this line belongs in server.js?? TODO ask BB
+// var Repo = require('./static/model/repo');
+
+// GET REQUEST TO GITHUB to grab data
+
+$.getJSON("https://api.github.com/users/mralexgray/repos", function(data) {
+    for(i=0; i<data.length; i++) {
+        console.log(data[i].id);
+    }
+});
+
+// POST IS NOW SUCCESFUL, BUT json not showing up in terminal, and no new files in DB
+
+// test repo to POST, see if shows up in db
+var repo = {
+    "id": "0101",
+    "name": "humza",
+    "fullname" : "humza ali"
+};
+
+// CREATE -- POST request to local node.js to create new repo
+$.post('http://localhost:7777/newRepo',
+
+    repo,
+
+    function() {
+        console.log('success');
+    }
+);
+
+
+/*
+ // READ
+ $.ajax({
+ url: 'http://localhost:7777/findRepo',
+ type: 'GET',
+ success: function(result) {
+
+ // do something with result
+ // update html page with some shit
+ }
+ });
+
+ // UPDATE
+ $.ajax({
+ url: 'http://localhost:7777/updateRepo'
+ type: 'POST',
+ success: function(result) {
+
+
+ }
+ });
+
+
+ // DELETE
+ $.ajax({
+ url: 'http://localhost:7777/deleteRepo',
+ type: 'DELETE',
+ success: function(result) {
+ // do something with the result
+ }
+ });
+
+
+ */
+
+
+
+
+// OLD JS for http requests
+
+/*
 
 function loadDoc() {
 
@@ -36,8 +108,8 @@ function loadDoc() {
     xhttp.open("GET",  "https://api.github.com/users/mralexgray/repos", true);
     xhttp.send();
 
-
-    /* trying to set up a post request */
+*/
+    /* trying to set up a post request
     var xhttp2 = new XMLHttpRequest();
     xhttp2.onreadystatechange = function() {
 
@@ -49,14 +121,8 @@ function loadDoc() {
 
 
     }
+*/
 
-
-
-    /* what does this do?? */
-    var Repo = require('./static/model/repo');
-    
-
-
-}
+//}
 
 
