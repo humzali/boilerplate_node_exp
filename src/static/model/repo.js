@@ -10,13 +10,19 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var RepoScheme = new Schema({
+var repoSchema = new Schema({
     id: Number,
     name: String,
     fullname: String
 });
 
-module.exports = mongoose.model('Repo', RepoScheme);
+
+var Repo = mongoose.model('Repo', repoSchema);
+
+module.exports = Repo;
 
 
+
+// old shit from other file
+// module.exports = mongoose.model('Repo', RepoScheme);
 

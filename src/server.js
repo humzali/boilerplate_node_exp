@@ -8,10 +8,80 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var port = process.env.PORT||7777;
 //var router = express.Router();
- var mongoose = require('mongoose');
- mongoose.connect('localhost:27017/test');
+
+// got rid of this again? wasnt needed..
+// var mongoose = require('mongoose');
+// mongoose.connect('localhost:27017/test');
 
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+
+
+/*
+    NEW STUFF FROM ME --> from mongo tutorial
+ */
+
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var ObjectID = require('mongodb').ObjectID;
+var url = 'mongodb://localhost:27017/test';
+
+
+var Repo = require('./static/model/repo');
+
+//connect to mongodb client ??
+MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    insertDocument(db, function() {
+        db.close();
+    });
+});
+
+
+// insert document function defined
+var insertDocument = function(db, callback) {
+    db.collection('restaurants').insertOne( {
+        "address": {
+            "street" : "2 Avenue",
+            "zipcode" : "10075",
+            "building" : "1480",
+            "coord" : [ -73.9557413, 40.7720266 ]
+        },
+        "borough": "Manhattan",
+        "cuisine": "Italian",
+        "grades": [
+            {
+                "date" : new Date("2014-10-01T00:00:00Z"),
+                "grade": "A",
+                "score": 11
+            },
+            {
+                "date" : new Date("2014-01-16T00:00:00Z"),
+                "grade": "B",
+                "score": 17
+            }
+        ],
+        "name" : "Vella",
+        "restaurant_id" : "41704620"
+    }, function(err, result) {
+        assert.equal(err, null);
+        console.log("inserted the d, bro");
+        callback();
+    });
+};
+
+var newRepo = Repo({
+    id: '0000',
+    name: 'humza',
+    fullname: 'humzaali'
+});
+
+newRepo.save(function(err) {
+    if (err) throw err;
+
+    console.log("lots of success");
+});
 
 /*
 Auth0 passport
@@ -100,7 +170,6 @@ var Bio = require('./static/model/bio');
 var Picture = require('./static/model/picture');
 var User = require('./static/model/user');
 var Profile = require('./static/model/profile');
-var Repo = require('./static/model/repo');
 
 /*
  Post Request EndPoints
@@ -132,7 +201,6 @@ app.post('/newUser', function(req, res)
 
 app.post('/newRepo', function(req, res)
 {
-    console.log("we did this at least");
     var repo = new Repo();
 
     // grab things from request body,
@@ -142,7 +210,7 @@ app.post('/newRepo', function(req, res)
     repo.name = req.body.name;
     repo.fullname = req.body.fullname;
 
-    console.log("all the way here");
+    res.send('hey');
 
     // save our new repo into our database??
     repo.save(function(err) {
