@@ -23,7 +23,8 @@ $.getJSON("https://api.github.com/users/mralexgray/repos", function(data) {
     // with data grabbed from first entry in JSON from github
 
     $.post('http://localhost:7777/newRepo', repo, function(result) {
-            console.log(result);
+        console.log("success");
+        console.log(result);
 
     });
 });
@@ -31,12 +32,12 @@ $.getJSON("https://api.github.com/users/mralexgray/repos", function(data) {
 // GET REQUEST to find user with officialid (taken from mongo) ... for some reason console.log(data)
 // is printing null TODO ask BB
 $.get('http://localhost:7777/findRepo', { officialid : "578323763a0b38199ba58bd4" }, function(data) {
-    console.log("get success")
+    console.log("get success");
     console.log(data);
 });
 
 //UPDATE REQUEST
-$.post('http://localhost:7777/updateRepo', { officialid: "578323763a0b38199ba58bd4"}, function(data) {
+$.post('http://localhost:7777/updateRepo', { officialid: "57831f813a0b38199ba58bd2"}, function(data) {
     console.log("update success");
     console.log(data);
 });
@@ -46,7 +47,7 @@ $.post('http://localhost:7777/updateRepo', { officialid: "578323763a0b38199ba58b
 $.ajax({
     url: 'http://localhost:7777/deleteRepo',
     type: 'DELETE',
-    data: {officialid: "57831fb53a0b38199ba58bd3"},
+    data: {officialid: "57831c5a0e69bcf49afc6717"},
     success: function(result) {
         console.log("delete success")
     }
