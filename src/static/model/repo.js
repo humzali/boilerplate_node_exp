@@ -11,7 +11,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var repoSchema = new Schema({
-    id: Number,
+    repoid: Number,
     name: String,
     fullname: String
 });
