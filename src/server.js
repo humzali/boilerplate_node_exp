@@ -160,8 +160,9 @@ app.post('/newRepo', function(req, res)
  */
 app.get('/findRepo', function(req, res)
 {
+    var officialid = req.query.officialid;
 
-    var officialid = req.body.officialid;
+    console.log(req.query.officialid);
 
     Repo.findById(officialid, function(err, repo){
         if (err) throw err;
