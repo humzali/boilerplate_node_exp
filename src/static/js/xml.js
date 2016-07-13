@@ -12,20 +12,20 @@ function getRepos() {
         var repoid = data[0].id;
         var name = data[0].name;
         var fullname = data[0].full_name;
-/*
+
         var repo = {
             "repoid" : repoid,
             "name" : name,
             "fullname" : fullname
         };
-*/
-        // TEST repo to populate with stuff to delete
-        var repo = {
-            "repoid" : "0101",
-            "name" : "delete_me",
-            "fullname" : "lulz"
-        };
 
+  /*      // TEST repo to populate with stuff to delete
+        var repo = {
+            "repoid" : "0000",
+            "name" : "to_be_deleted",
+            "fullname" : "gayboyz"
+        };
+ */
         // POST REQUEST to our local server to CREATE new repo
         // with data grabbed from first entry in JSON from github
 
@@ -40,7 +40,7 @@ function getRepos() {
 
 // GET REQUEST to find user with officialid (from MONGO)
 function findRepo() {
-    $.get('http://localhost:7777/findRepo', {officialid: "57831f813a0b38199ba58bd2"}, function (data) {
+    $.get('http://localhost:7777/findRepo', {officialid: "57843a00250aefabaf7ec9c8"}, function (data) {
         console.log("get success");
         console.log(data);
     });
@@ -49,7 +49,7 @@ function findRepo() {
 
 //UPDATE REQUEST
 function updateRepo() {
-    $.post('http://localhost:7777/updateRepo', {officialid: "57835fd65bf5ae479fd29de7"}, function (data) {
+    $.post('http://localhost:7777/updateRepo', {officialid: "57843a00250aefabaf7ec9c8"}, function (data) {
         console.log("update success");
         console.log(data);
     });
@@ -61,7 +61,7 @@ function deleteRepo() {
     $.ajax({
        url: 'http://localhost:7777/deleteRepo',
        type: 'DELETE',
-       data: {officialid: "57835fd65bf5ae479fd29de7"},
+       data: {officialid: "57843a00250aefabaf7ec9c8"},
        success: function(result) {
            $("#div1").html(result);
            console.log("delete success");

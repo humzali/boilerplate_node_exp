@@ -7,7 +7,9 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var port = process.env.PORT||7777;
+var morgan = require('morgan');
 //var router = express.Router();
+var methodOverride = require('method-override');
 
 // got rid of this again? wasnt needed..
  var mongoose = require('mongoose');
@@ -36,6 +38,15 @@ app.use(session({ secret: 'YOUR_SECRET_HERE', resave: false,  saveUninitialized:
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({'extended':'true'}));
+app.use(bodyParser.json());
+app.use(bodyParser.json({type:'application/vnd.api+json'}));
+app.use(methodOverride());
+
+
+
 
 // Auth0 callback handler
 app.get('/loginCallback',
@@ -87,6 +98,13 @@ app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 
+
+// define model 
+var Todo = mongoose.model('Todo', {
+  text : String
+});
+
+
 app.listen(port, function()  {
     console.log('listening on port ' + port);
 });
@@ -100,6 +118,60 @@ var Picture = require('./static/model/picture');
 var User = require('./static/model/user');
 var Profile = require('./static/model/profile');
 var Repo = require('./static/model/repo');
+
+
+
+app.get('/api/todos', function(req, res) {
+
+
+  Todo.find(function(err, todos) {
+
+      if (err) 
+        res.send(err);
+
+      res.json(todos);
+  });
+});
+
+
+app.post('/api/todos', function(req, res) {
+
+
+  // create a todo from ajax reqest 
+  Todo.create({
+    text : req.body.text,
+    done : false
+  }, function(err, todo) {
+    if (err)
+      res.send(err);
+
+    Todo.find(function(err, todos) {
+        if (err)
+          res.send(err);
+        res.json(todos);
+    });
+  });
+});
+
+app.delete('/api/todos/:todo_id', function(req, res) {
+
+  Todo.remove({
+    _id : req.params.todo_id
+  }, function(err, todo) {
+    if (err)
+      res.send(err);
+
+    Todo.find(function(err, todos) {
+      if (err)
+        res.send(err);
+      res.json(todos);
+
+    });
+  });
+});
+
+
+
 
 
 /*
@@ -167,6 +239,7 @@ app.get('/findRepo', function(req, res)
     Repo.findById(officialid, function(err, repo){
         if (err) throw err;
 
+        res.send(repo);
         // if succesful, let us know
         console.log("READ success")
         console.log(repo);
@@ -192,6 +265,7 @@ app.post('/updateRepo', function(req, res)
         repo.save(function(err) {
             if (err) throw err;
 
+            res.send(repo);
             console.log('UPDATE success');
         });
     });
@@ -210,6 +284,7 @@ app.delete('/deleteRepo', function(req, res)
 
         if (err) throw err;
 
+        res.send("success");
         console.log('DELETE success!');
     });
 });
